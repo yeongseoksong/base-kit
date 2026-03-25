@@ -1,0 +1,5 @@
+io.github.yeongseoksong.platform.jpa.JpaAuditingConfig
+io.github.yeongseoksong.platform.web.WebMvcConfig
+io.github.yeongseoksong.platform.exception.GlobalExceptionHandler
+io.github.yeongseoksong.platform.cqrs.CqrsAutoConfiguration
+io.github.yeongseoksong.platform.datasource.RoutingDataSourceAutoConfiguration

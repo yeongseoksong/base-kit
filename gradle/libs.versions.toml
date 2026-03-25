@@ -1,0 +1,23 @@
+[versions]
+springBoot = "3.5.8"
+dependencyManagement = "1.1.4"
+lokiLogback = "1.5.2"
+
+[plugins]
+springBoot = { id = "org.springframework.boot", version.ref = "springBoot" }
+dependencyManagement = { id = "io.spring.dependency-management", version.ref = "dependencyManagement" }
+
+[libraries]
+spring-starter = { group = "org.springframework.boot", name = "spring-boot-starter", version.ref = "springBoot" }
+spring-web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "springBoot" }
+spring-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa", version.ref = "springBoot" }
+spring-validation = { group = "org.springframework.boot", name = "spring-boot-starter-validation", version.ref = "springBoot" }
+spring-actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator", version.ref = "springBoot" }
+spring-test = { group = "org.springframework.boot", name = "spring-boot-starter-test", version.ref = "springBoot" }
+junit-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
+h2 = { group = "com.h2database", name = "h2" }
+lombok = { group = "org.projectlombok", name = "lombok", version = "1.18.30" }
+# Observability
+micrometer-tracing-otel = { group = "io.micrometer", name = "micrometer-tracing-bridge-otel" }
+otel-exporter-otlp = { group = "io.opentelemetry", name = "opentelemetry-exporter-otlp" }
+loki-logback = { group = "com.github.loki4j", name = "loki-logback-appender", version.ref = "lokiLogback" }

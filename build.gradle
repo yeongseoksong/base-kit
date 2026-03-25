@@ -1,0 +1,55 @@
+plugins {
+    alias(libs.plugins.springBoot) apply false
+    alias(libs.plugins.dependencyManagement) apply false
+}
+
+def getGitVersion = { ->
+    def tag = providers.exec {
+        commandLine 'git', 'describe', '--tags', '--exact-match'
+        ignoreExitValue = true
+    }.standardOutput.asText.getOrElse('').trim()
+
+    if (tag) {
+        return tag.replaceFirst('^v', '')
+    }
+
+    def hash = providers.exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+    }.standardOutput.asText.get().trim()
+
+    return hash + '-SNAPSHOT'
+}
+
+allprojects {
+    group = 'io.github.yeongseoksong'
+    version = getGitVersion()
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: libs.plugins.dependencyManagement.get().pluginId
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+dependencies {
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+}
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs.add("-parameters")
+}

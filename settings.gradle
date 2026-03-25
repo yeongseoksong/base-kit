@@ -1,0 +1,6 @@
+rootProject.name = 'base-kit'
+include 'platform'
+include 'lib-entity'
+
+
+include 'demo'

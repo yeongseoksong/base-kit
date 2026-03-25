@@ -1,0 +1,44 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+jar { enabled = true }
+
+java {
+    withSourcesJar()
+}
+
+dependencies {
+    api project(':lib-entity')
+    api libs.spring.starter
+    api libs.spring.web
+    api libs.spring.jpa
+    api libs.spring.validation
+    api libs.lombok
+    annotationProcessor libs.lombok
+    testImplementation libs.spring.test
+    testRuntimeOnly libs.junit.launcher
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            groupId = project.group
+            artifactId = 'base-kit-platform'
+            version = project.version
+        }
+    }
+    repositories {
+        mavenLocal()
+        maven {
+            name = 'GitHubPackages'
+            url = uri('https://maven.pkg.github.com/yeongseoksong/base-kit')
+            credentials {
+                username = System.getenv('GITHUB_ACTOR') ?: project.findProperty('gpr.user')?.toString()
+                password = System.getenv('GITHUB_TOKEN') ?: project.findProperty('gpr.key')?.toString()
+            }
+        }
+    }
+}
